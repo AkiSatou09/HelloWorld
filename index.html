@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World • Beautiful</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;600&display=swap');
+
+        :root {
+            --primary: #00ff9d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background particles */
+        .bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 25s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); }
+            100% { transform: translateY(-100vh) scale(1.5); }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .hello {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(4rem, 12vw, 9rem);
+            font-weight: 600;
+            line-height: 1;
+            background: linear-gradient(90deg, #ffffff, var(--primary), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .world {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 500;
+            color: #ccc;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 3rem;
+            color: #aaa;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000;
+            background: var(--primary);
+            border-radius: 9999px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
+        }
+
+        .button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.4);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.9rem;
+            color: #555;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px var(--primary));
+            }
+            to {
+                filter: drop-shadow(0 0 40px var(--primary));
+            }
+        }
+
+        /* Decorative elements */
+        .decoration {
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <div class="container">
+        <div class="decoration" style="top: 10%; left: 5%; transform: rotate(-15deg);">🌍</div>
+        <div class="decoration" style="bottom: 15%; right: 8%; transform: rotate(25deg);">✨</div>
+
+        <h1 class="hello">HELLO</h1>
+        <h2 class="world">WORLD</h2>
+        
+        <p class="subtitle">
+            A beautiful, modern Hello World created with love using pure HTML &amp; CSS
+        </p>
+        
+        <a href="#" onclick="celebrate()" class="button">
+            Say Hello Back
+        </a>
+    </div>
+
+    <div class="footer">
+        Made with ❤️ • Pure HTML + CSS
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 20 + 15}s`;
+                particle.style.animationDelay = `-${Math.random() * 30}s`;
+                particle.style.opacity = Math.random() * 0.2 + 0.08;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Celebration effect
+        function celebrate() {
+            const colors = ['#00ff9d', '#ff00ff', '#00ffff', '#ffff00'];
+            
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    confetti.style.zIndex = '100';
+                    confetti.style.opacity = '0.9';
+                    document.body.appendChild(confetti);
+
+                    const angle = Math.random() * 80 - 40;
+                    const duration = Math.random() * 3 + 2;
+
+                    confetti.animate([
+                        { 
+                            transform: `translateY(0) rotate(0deg)`,
+                            opacity: 1
+                        },
+                        { 
+                            transform: `translateY(\( {window.innerHeight + 100}px) rotate( \){angle * 8}deg)`,
+                            opacity: 0
+                        }
+                    ], {
+                        duration: duration * 1000,
+                        easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
+                    });
+
+                    setTimeout(() => confetti.remove(), duration * 1000 + 100);
+                }, i * 8);
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            createParticles();
+            
+            // Keyboard easter egg
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'h' || e.key === 'H') {
+                    celebrate();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
