@@ -1,233 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World • Beautiful</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A poem for Ariana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #14110f;
+    --wine: #3b0f1a;
+    --rose: #c97c8d;
+    --rose-soft: #e3aeb8;
+    --gold: #d6b370;
+    --parchment: #f3e9dc;
+    --muted: #a4908c;
+    --line: rgba(214,179,112,0.28);
+  }
 
-        :root {
-            --primary: #00ff9d;
-        }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(59,15,26,0.55), transparent 55%),
+      radial-gradient(ellipse at 85% 15%, rgba(201,124,141,0.10), transparent 45%),
+      var(--ink);
+    color: var(--parchment);
+    font-family:'Cormorant Garamond', serif;
+    overflow-x:hidden;
+    position:relative;
+  }
 
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            height: 100vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
+  #petals{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+  }
 
-        /* Background particles */
-        .bg-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
+  .wrap{
+    position:relative;
+    z-index:2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
 
-        .particle {
-            position: absolute;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.15;
-            animation: float 25s infinite linear;
-        }
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height: 62vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 60px 0 20px;
+  }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0.5); }
-            100% { transform: translateY(-100vh) scale(1.5); }
-        }
+  .title{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 5vw, 3.2rem);
+    line-height: 1.25;
+    margin: 0;
+    color: var(--parchment);
+    max-width: 700px;
+  }
+  .title span{ color: var(--rose-soft); }
 
-        .container {
-            text-align: center;
-            z-index: 2;
-            padding: 2rem;
-        }
+  .scroll-cue{
+    margin-top: 46px;
+    font-family:'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .scroll-cue .stem{
+    width:1px; height:34px;
+    background: linear-gradient(var(--gold), transparent);
+    animation: pulseDown 2.2s ease-in-out infinite;
+  }
+  @keyframes pulseDown{
+    0%,100%{ opacity:0.25; }
+    50%{ opacity:1; }
+  }
 
-        .hello {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(4rem, 12vw, 9rem);
-            font-weight: 600;
-            line-height: 1;
-            background: linear-gradient(90deg, #ffffff, var(--primary), #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
+  /* ---------- Scattered collage ---------- */
+  .collage{
+    position:relative;
+    height: 760px;
+    margin: 20px 0 60px;
+  }
 
-        .world {
-            font-size: clamp(2.5rem, 7vw, 5rem);
-            font-weight: 500;
-            color: #ccc;
-            letter-spacing: -0.02em;
-        }
+  .polaroid{
+    position:absolute;
+    background: #efe6da;
+    padding: 12px 12px 40px;
+    border-radius: 3px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.04) inset;
+    will-change: transform;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+    cursor: pointer;
+    animation: dropIn 0.8s ease backwards, sway 8s ease-in-out infinite;
+    animation-delay: var(--drop-delay, 0s), var(--drop-delay, 0s);
+  }
+  .polaroid:hover{
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    z-index: 20 !important;
+    transform: rotate(0deg) scale(1.06);
+    animation-play-state: paused;
+  }
+  .polaroid:focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+  }
 
-        .subtitle {
-            font-size: 1.4rem;
-            margin: 1.5rem 0 3rem;
-            color: #aaa;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+  @keyframes dropIn{
+    from{ opacity:0; transform: translateY(-50px) rotate(var(--tilt,0deg)); }
+    to{ opacity:1; transform: translateY(0) rotate(var(--tilt,0deg)); }
+  }
+  @keyframes sway{
+    0%,100%{ transform: rotate(var(--tilt, -2deg)); }
+    50%{ transform: rotate(calc(var(--tilt, -2deg) * -0.6)); }
+  }
 
-        .button {
-            display: inline-block;
-            padding: 16px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #000;
-            background: var(--primary);
-            border-radius: 9999px;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
-        }
+  .polaroid .frame{
+    width:100%;
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    background: linear-gradient(135deg, #3a2c2a, #26201d);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  }
+  .polaroid img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    display:block;
+  }
+  .polaroid .fallback{
+    font-family:'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(243,233,220,0.35);
+    text-align:center;
+    padding: 12px;
+  }
+  .polaroid .cap{
+    position:absolute;
+    bottom: 12px;
+    left:0; right:0;
+    text-align:center;
+    font-family:'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6b5c53;
+    pointer-events:none;
+  }
 
-        .button:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.4);
-        }
+  @media (max-width: 720px){
+    .collage{
+      height:auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 26px;
+      padding: 10px 0 40px;
+    }
+    .collage .polaroid{
+      position: static !important;
+      width: min(72vw, 280px) !important;
+    }
+  }
 
-        .footer {
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.9rem;
-            color: #555;
-            z-index: 2;
-        }
+  /* ---------- Poem ---------- */
+  .poem{
+    padding: 20px 0 40px;
+  }
+  .stanza-block{
+    max-width: 620px;
+    margin: 0 auto 56px;
+    text-align:center;
+    opacity:0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .stanza-block.in-view{
+    opacity:1;
+    transform: translateY(0);
+  }
+  .stanza-num{
+    font-family:'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display:block;
+    margin-bottom: 16px;
+  }
+  .stanza{
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.85;
+    color: var(--parchment);
+  }
+  .stanza em{
+    color: var(--rose-soft);
+    font-style: italic;
+  }
 
-        @keyframes glow {
-            from {
-                filter: drop-shadow(0 0 20px var(--primary));
-            }
-            to {
-                filter: drop-shadow(0 0 40px var(--primary));
-            }
-        }
+  /* ---------- Closing ---------- */
+  .closing{
+    text-align:center;
+    padding: 60px 0 20px;
+  }
+  .closing .title{
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+  }
+  .closing p{
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 460px;
+    margin: 20px auto 40px;
+    line-height: 1.7;
+    font-style: italic;
+  }
 
-        /* Decorative elements */
-        .decoration {
-            position: absolute;
-            font-size: 12rem;
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 0;
-        }
-    </style>
+  .heart-btn{
+    background:none;
+    border: 1px solid var(--line);
+    color: var(--rose-soft);
+    font-family:'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border-radius: 999px;
+    cursor:pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    position:relative;
+    z-index:2;
+  }
+  .heart-btn:hover{
+    background: rgba(201,124,141,0.14);
+    transform: translateY(-2px);
+  }
+  .heart-btn:active{ transform: translateY(0); }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background: rgba(10,8,7,0.92);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index: 50;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.35s ease;
+    padding: 24px;
+  }
+  .lightbox.open{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .lightbox img{
+    max-width: min(90vw, 560px);
+    max-height: 82vh;
+    object-fit:contain;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    transform: scale(0.92);
+    transition: transform 0.35s ease;
+  }
+  .lightbox.open img{ transform: scale(1); }
+  .lightbox-close{
+    position:absolute;
+    top: 26px; right: 30px;
+    background:none;
+    border: 1px solid var(--line);
+    color: var(--parchment);
+    font-family:'Jost', sans-serif;
+    letter-spacing: 0.2em;
+    text-transform:uppercase;
+    font-size: 0.68rem;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor:pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .polaroid{ animation: none; }
+    .scroll-cue .stem{ animation: none; }
+    .stanza-block{ transition: none; opacity:1; transform:none; }
+  }
+</style>
 </head>
 <body>
-    <!-- Background particles -->
-    <div class="bg-particles" id="particles"></div>
 
-    <div class="container">
-        <div class="decoration" style="top: 10%; left: 5%; transform: rotate(-15deg);">🌍</div>
-        <div class="decoration" style="bottom: 15%; right: 8%; transform: rotate(25deg);">✨</div>
+<canvas id="petals"></canvas>
 
-        <h1 class="hello">HELLO</h1>
-        <h2 class="world">WORLD</h2>
-        
-        <p class="subtitle">
-            A beautiful, modern Hello World created with love using pure HTML &amp; CSS
-        </p>
-        
-        <a href="#" onclick="celebrate()" class="button">
-            Say Hello Back
-        </a>
+<div class="wrap">
+
+  <section class="hero">
+    <h1 class="title">A poem for <span>Ariana</span>, to the one I love the most</h1>
+    <div class="scroll-cue">
+      <span>scroll</span>
+      <span class="stem"></span>
+    </div>
+  </section>
+
+  <section class="collage">
+    <div class="polaroid" data-photo="1" tabindex="0" style="--tilt:-9deg; --drop-delay:0s; top:0%; left:4%; width:230px; z-index:2;">
+      <div class="frame">
+        <img src="us1.jpg" alt="Ikaw at ako, isa" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="display:none; align-items:center; justify-content:center; height:100%;">us1.jpg</div>
+      </div>
+      <span class="cap">isa</span>
     </div>
 
-    <div class="footer">
-        Made with ❤️ • Pure HTML + CSS
+    <div class="polaroid" data-photo="2" tabindex="0" style="--tilt:7deg; --drop-delay:0.15s; top:6%; left:55%; width:198px; z-index:4;">
+      <div class="frame">
+        <img src="us2.jpg" alt="Ikaw at ako, dalawa" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="display:none; align-items:center; justify-content:center; height:100%;">us2.jpg</div>
+      </div>
+      <span class="cap">dalawa</span>
     </div>
 
-    <script>
-        // Create floating particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 80; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 6 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.animationDuration = `${Math.random() * 20 + 15}s`;
-                particle.style.animationDelay = `-${Math.random() * 30}s`;
-                particle.style.opacity = Math.random() * 0.2 + 0.08;
-                
-                container.appendChild(particle);
-            }
-        }
+    <div class="polaroid" data-photo="3" tabindex="0" style="--tilt:6deg; --drop-delay:0.3s; top:44%; left:1%; width:212px; z-index:3;">
+      <div class="frame">
+        <img src="us3.jpg" alt="Ikaw at ako, tatlo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="display:none; align-items:center; justify-content:center; height:100%;">us3.jpg</div>
+      </div>
+      <span class="cap">tatlo</span>
+    </div>
 
-        // Celebration effect
-        function celebrate() {
-            const colors = ['#00ff9d', '#ff00ff', '#00ffff', '#ffff00'];
-            
-            for (let i = 0; i < 60; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.style.position = 'fixed';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = '-10px';
-                    confetti.style.width = '10px';
-                    confetti.style.height = '10px';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-                    confetti.style.zIndex = '100';
-                    confetti.style.opacity = '0.9';
-                    document.body.appendChild(confetti);
+    <div class="polaroid" data-photo="4" tabindex="0" style="--tilt:-5deg; --drop-delay:0.45s; top:36%; left:58%; width:245px; z-index:1;">
+      <div class="frame">
+        <img src="us4.jpg" alt="Ikaw at ako, apat" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="display:none; align-items:center; justify-content:center; height:100%;">us4.jpg</div>
+      </div>
+      <span class="cap">apat</span>
+    </div>
 
-                    const angle = Math.random() * 80 - 40;
-                    const duration = Math.random() * 3 + 2;
+    <div class="polaroid" data-photo="5" tabindex="0" style="--tilt:2deg; --drop-delay:0.6s; top:66%; left:27%; width:225px; z-index:5;">
+      <div class="frame">
+        <img src="us5.jpg" alt="Ikaw at ako, lima" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="fallback" style="display:none; align-items:center; justify-content:center; height:100%;">us5.jpg</div>
+      </div>
+      <span class="cap">lima</span>
+    </div>
+  </section>
 
-                    confetti.animate([
-                        { 
-                            transform: `translateY(0) rotate(0deg)`,
-                            opacity: 1
-                        },
-                        { 
-                            transform: `translateY(\( {window.innerHeight + 100}px) rotate( \){angle * 8}deg)`,
-                            opacity: 0
-                        }
-                    ], {
-                        duration: duration * 1000,
-                        easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
-                    });
+  <section class="poem">
 
-                    setTimeout(() => confetti.remove(), duration * 1000 + 100);
-                }, i * 8);
-            }
-        }
+    <div class="stanza-block">
+      <span class="stanza-num">I.</span>
+      <p class="stanza">Bago ika'y dumating, tahimik lang ang bawat sandali, mga araw ko'y payak, walang tunog, walang himig, ngunit nang tumapak ka sa buhay kong tila balon ng kadiliman, <em>bigla na lang sumibol ang bawat kulay na nakatago sa dilim.</em></p>
+    </div>
 
-        // Initialize
-        window.onload = function() {
-            createParticles();
-            
-            // Keyboard easter egg
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'h' || e.key === 'H') {
-                    celebrate();
-                }
-            });
+    <div class="stanza-block">
+      <span class="stanza-num">II.</span>
+      <p class="stanza">Ikaw ang bukang-liwayway pagkatapos ng pinakamadilim na gabi, ang unang hangin na humipo sa puso kong tuyot na lupa, sa bawat ngiti mong ipinapakita'y parang bulaklak na sumisibol, <em>sa disyerto kong buhay, ikaw ang unang ulan na dumating.</em></p>
+    </div>
+
+    <div class="stanza-block">
+      <span class="stanza-num">III.</span>
+      <p class="stanza">Hindi ko na kayang isipin ang mundong wala ka, dahil ang bawat sandaling kapiling ka ay para bang panalangin, sinasagot ng langit ang hiling kong matagal nang binitawan, <em>kaya bawat araw, ipinapangako ako'y sa'yo lang, araw araw nagpapasalamat, tuwina.</em></p>
+    </div>
+
+    <div class="stanza-block">
+      <span class="stanza-num">IV.</span>
+      <p class="stanza">Nais kong maging sanggalang sa bawat bagyo ng iyong buhay, pigilin ang bawat luha bago pa man ito pumatak, tanggalin ang bawat alalahaning kumakapit sa'yong dibdib, sinta, <em>at ipaalam na hindi ka nag-iisa, hangga't ako'y nabubuhay.</em></p>
+    </div>
+
+    <div class="stanza-block">
+      <span class="stanza-num">V.</span>
+      <p class="stanza">Sapagkat mahal kita nang lampas sa kayang sabihin ng salita, hindi ito basta-bastang pag-ibig na nauuso lang o lumilipas, ito'y isang pangako na kahit gaano man kalayo ang landas, <em>ako'y mananatiling tapat, at hindi kailanman lilisan sa iyong tabi o aking sinta.</em></p>
+    </div>
+
+    <div class="stanza-block">
+      <span class="stanza-num">VI.</span>
+      <p class="stanza">Gusto kong malaman mong ikaw ang pinakamagandang nangyari sa buhay ko, na ngayon ay meron ng isang tao na ayaw kong mawala, isang taong gusto kong mapasaya sa araw araw na patuloy pang darating, isang tao na ang tanging hiling ko lang ay mapangiti't mapasaya, sinta, <em>ipinapangako na ika'y aking laging pipiliin at mamahalin hanggang sa dumating man ang araw na pumuti na ang aking buhok, hanggang sa aking huling paghinga, ipinapangakong ikaw lang ang aking pipiliin at mamahalin.</em></p>
+    </div>
+
+  </section>
+
+  <section class="closing">
+    <button class="heart-btn" id="heartBtn">say it again</button>
+  </section>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">close</button>
+  <img id="lightboxImg" src="" alt="Enlarged photo">
+</div>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Scroll reveal for stanzas ---- */
+  var blocks = document.querySelectorAll('.stanza-block');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  blocks.forEach(function(b){ io.observe(b); });
+
+  /* ---- Polaroid tilt-on-hover (desktop only) ---- */
+  var canHover = window.matchMedia('(pointer: fine)').matches;
+  if(canHover && !reduceMotion){
+    document.querySelectorAll('.polaroid').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width - 0.5;
+        var y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = 'rotate(' + (x * 8) + 'deg) scale(1.05)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = 'rotate(var(--tilt)) scale(1)';
+      });
+    });
+  }
+
+  /* ---- Lightbox ---- */
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.polaroid').forEach(function(card){
+    function openLB(){
+      var img = card.querySelector('img');
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    }
+    card.addEventListener('click', openLB);
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLB(); }
+    });
+  });
+  function closeLB(){ lightbox.classList.remove('open'); }
+  document.getElementById('lightboxClose').addEventListener('click', closeLB);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLB(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLB(); });
+
+  /* ---- Floating hearts on button click ---- */
+  document.getElementById('heartBtn').addEventListener('click', function(e){
+    for(var i=0;i<10;i++){
+      var h = document.createElement('div');
+      h.textContent = '♥';
+      h.style.position = 'fixed';
+      h.style.left = (e.clientX + (Math.random()*60-30)) + 'px';
+      h.style.top = (e.clientY) + 'px';
+      h.style.color = 'rgba(201,124,141,' + (0.6 + Math.random()*0.4) + ')';
+      h.style.fontSize = (14 + Math.random()*14) + 'px';
+      h.style.pointerEvents = 'none';
+      h.style.zIndex = 60;
+      h.style.transition = 'transform 1.6s ease-out, opacity 1.6s ease-out';
+      document.body.appendChild(h);
+      requestAnimationFrame(function(el){
+        return function(){
+          el.style.transform = 'translateY(-' + (120 + Math.random()*100) + 'px) translateX(' + (Math.random()*80-40) + 'px)';
+          el.style.opacity = '0';
         };
-    </script>
+      }(h));
+      setTimeout(function(el){ return function(){ el.remove(); }; }(h), 1700);
+    }
+  });
+
+  /* ---- Ambient falling petals ---- */
+  if(!reduceMotion){
+    var canvas = document.getElementById('petals');
+    var ctx = canvas.getContext('2d');
+    var W, H;
+    function resize(){
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = document.body.scrollHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var petals = [];
+    var count = window.innerWidth < 720 ? 14 : 26;
+    for(var i=0;i<count;i++){
+      petals.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: 2 + Math.random()*3,
+        speedY: 0.25 + Math.random()*0.5,
+        speedX: (Math.random()-0.5)*0.4,
+        sway: Math.random()*Math.PI*2,
+        opacity: 0.25 + Math.random()*0.35
+      });
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      petals.forEach(function(p){
+        p.sway += 0.01;
+        p.x += p.speedX + Math.sin(p.sway)*0.3;
+        p.y += p.speedY;
+        if(p.y > H) { p.y = -10; p.x = Math.random()*W; }
+        if(p.x > W) p.x = 0;
+        if(p.x < 0) p.x = W;
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(201,124,141,' + p.opacity + ')';
+        ctx.ellipse(p.x, p.y, p.r, p.r*1.6, Math.sin(p.sway), 0, Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+})();
+</script>
+
 </body>
 </html>
